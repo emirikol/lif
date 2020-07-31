@@ -1,0 +1,12 @@
+.viewport
+  .toolbar
+    =link_to 'next round', '/games/round', remote: true
+    =link_to '+col', '/games/add_col'
+    %span#output
+  .grid
+    -@cells.each do |y, row|
+      .row
+        -row.each_with_index do |c, x|
+          .cell{data: {x: x, y: y}, id: c.id, class: c.crystal&.state}
+            -if (t = c.token)
+              .token{data: {token_id: t.id}, style: "background-color:#{t.color}"}=t.name[0,2]

@@ -15,3 +15,30 @@ require("channels")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+import Delta from 'channels/delta_channel'
+
+$( function() {
+  $( ".token" ).draggable({cursor: "move", revert: "invalid",
+  start: function(e,ui) {
+    $(this).data('origin', $(this).parent())
+   }});
+  $('.cell').droppable({
+    drop: function(e,ui){ Delta.perform('move', {token_id: ui.draggable.data('tokenId'), cell_id: $(this).attr('id')} )},
+    over: function(e,ui){
+      const origin = ui.draggable.data('origin');
+      let distance = ['x', 'y'].map((axis)=>{return Math.abs(origin.data()[axis] - $(this).data()[axis])}).sort((a,b)=>b-a)[0];
+      $('#output').text(`${distance * 5}ft`);
+    }
+  }).click(function(e){
+    if (e.ctrlKey) { 
+      Delta.perform('light', {id: $(this).attr('id')} )
+    } else if (window.admin) {
+      Delta.perform('build', {id: $(this).attr('id')} )
+    }
+  });
+
+} );
+
+// console.info(Delta);
+// window.foo = Delta;

@@ -1,0 +1,53 @@
+// Place all the styles related to the games controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.viewport {
+  width: 100%;
+  height: calc(100vh - 16px);
+  overflow: scroll;
+}
+.row {
+  width: max-content;
+  &:first-child{
+    border-top: 1px solid black;
+  }
+}
+$cell-size: 30px;
+$token-size: $cell-size * 0.8;
+
+.cell {
+  float: left;
+  height: $cell-size;
+  width: $cell-size;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  &:last-child {
+    border-right: 1px solid black;
+  }
+  &.lit {
+    background-color:#f1f39a;
+  }
+  &.live {
+    background-color:#bbecff;
+  }
+  &.dead {
+    background-color: #cccccc;
+  }
+}
+.token {
+  display: inline-block;
+  width: $token-size;
+  height: $token-size;
+  margin: ($cell-size - $token-size)/2;
+  // background-color: cadetblue;
+}
+
+.ui-droppable-hover {
+  background-color: #F54E4F !important;
+}
