@@ -8,7 +8,8 @@ class GamesController < ApplicationController
   def show
     case params[:id]
     when "round"
-      # g = Grid.new(0.upto(10).to_a.repeated_permutation(2).map {|(x,y)| Crystal.new(x,y)})
+      # g = Grid.new()
+      # 0.upto(10).to_a.repeated_permutation(2).map {|(x,y)| Cell.create(x: x,y: y).create_crystal(state: :dead) }
       g = Grid.new(Crystal.includes(:cell).to_a)
       # fail
       d = g.deltas
