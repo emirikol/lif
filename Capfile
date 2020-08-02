@@ -32,7 +32,24 @@ require "capistrano/rbenv"
 # require "capistrano/bundler"
 require "capistrano/rails/assets"
 require "capistrano/rails/migrations"
+# require "capistrano/puma"
 # require "capistrano/passenger"
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
 Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }
+
+
+namespace :deploy do
+  desc "Start puma instance for this application"
+  task :restart do
+    on roles(:app) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :bundle, "exec pumactl -P tmp/pids/server.pid restart"
+        end
+      end
+    end
+  end
+end
+
+after 'deploy:symlink:release', 'deploy:restart'

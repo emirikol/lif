@@ -22,6 +22,10 @@ class GamesController < ApplicationController
       y1,y2,x2 = Cell.minimum(:y), Cell.maximum(:y), Cell.maximum(:x)
       y1.upto(y2).each {|y|  Cell.create(x: x2+1, y: y).tap{|c| c.create_crystal(state: :dead) } }
       redirect_to root_path
+    when 'add_row'
+      y1,y2,x1, x2 = Cell.minimum(:y), Cell.maximum(:y), Cell.minimum(:x), Cell.maximum(:x)
+      x1.upto(x2).each {|x|  Cell.create(x: x, y: y2+1).tap{|c| c.create_crystal(state: :dead) } }
+      redirect_to root_path
     end
   end
 

@@ -31,7 +31,7 @@ $( function() {
       $('#output').text(`${distance * 5}ft`);
     }
   }).click(function(e){
-    if (e.ctrlKey) { 
+    if (e.ctrlKey || e.metaKey) { 
       Delta.perform('light', {id: $(this).attr('id')} )
     } else if (window.admin) {
       Delta.perform('build', {id: $(this).attr('id')} )
