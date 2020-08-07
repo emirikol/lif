@@ -41,4 +41,4 @@ $( function() {
 } );
 
 // console.info(Delta);
-// window.foo = Delta;
+window.Delta = Delta;

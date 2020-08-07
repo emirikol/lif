@@ -2,16 +2,16 @@ class GamesController < ApplicationController
 
 
   def index
-    @cells = Cell.order(:x).includes(:token, :crystal).to_a.group_by(&:y)
+    @cells = Cell.order(:x).preload(:token, :crystals).to_a.group_by(&:y)
   end
 
   def show
-    File.open('log/actions.log', 'a'){|f| f.write(params[:id]+"\n")}
+    File.open('log/actions.log', 'a'){|f| f.write("http,show,#{params.to_json}"+"\n")}
     case params[:id]
     when "round"
       # g = Grid.new()
       # 0.upto(10).to_a.repeated_permutation(2).map {|(x,y)| Cell.create(x: x,y: y).create_crystal(state: :dead) }
-      crystals = Crystal.includes(:cell).to_a
+      crystals = Crystal.active.includes(:cell).to_a
       g = Grid.new(crystals)
       File.open('log/state.log', 'a'){|f| f.write(crystals.map{|c| {cell_id: c.cell_id, state: c.state}}.to_json+"\n")}
       # fail

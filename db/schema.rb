@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_30_172208) do
+ActiveRecord::Schema.define(version: 2020_08_07_203232) do
+
+  create_table "boards", force: :cascade do |t|
+    t.boolean "active", default: false
+  end
 
   create_table "cells", force: :cascade do |t|
     t.integer "x"
@@ -20,6 +24,7 @@ ActiveRecord::Schema.define(version: 2020_07_30_172208) do
   create_table "crystals", force: :cascade do |t|
     t.integer "cell_id"
     t.string "state", default: "dead"
+    t.integer "board_id"
     t.index ["cell_id"], name: "index_crystals_on_cell_id"
   end
 

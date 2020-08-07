@@ -14,6 +14,7 @@ export default consumer.subscriptions.create("DeltaChannel", {
     data.actions.forEach((d) => {
       if(d.hasOwnProperty('crystal')) $(`#${d.id}`).removeClass('live lit dead').addClass(d.crystal);
       if(d.token_id) $(`.token[data-token-id=${d.token_id}]`).appendTo($(`#${d.id}`)).css({left: 'auto', top: 'auto'});
+      if(d == 'clear') $('.cell').removeClass('live lit dead');
     })
     // Called when there's incoming data on the websocket for this channel
   }

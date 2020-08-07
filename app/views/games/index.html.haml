@@ -7,9 +7,10 @@
       -# =link_to '+row', '/games/add_row'
     %span#output 0ft
   .grid
+    -board = Board.where(active: true).first.id
     -@cells.each do |y, row|
       .row
         -row.each_with_index do |c, x|
-          .cell{data: {x: x, y: y}, id: c.id, class: c.crystal&.state}
+          .cell{data: {x: x, y: y}, id: c.id, class: c.crystals.detect{|c| c.board_id == board}&.state}
             -if (t = c.token)
               .token{data: {token_id: t.id}, style: "background-color:#{t.color}"}=t.name[0,2]
