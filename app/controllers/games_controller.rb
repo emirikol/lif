@@ -6,11 +6,14 @@ class GamesController < ApplicationController
   end
 
   def show
+    File.open('log/actions.log', 'a'){|f| f.write(params[:id]+"\n")}
     case params[:id]
     when "round"
       # g = Grid.new()
       # 0.upto(10).to_a.repeated_permutation(2).map {|(x,y)| Cell.create(x: x,y: y).create_crystal(state: :dead) }
-      g = Grid.new(Crystal.includes(:cell).to_a)
+      crystals = Crystal.includes(:cell).to_a
+      g = Grid.new(crystals)
+      File.open('log/state.log', 'a'){|f| f.write(crystals.map{|c| {cell_id: c.cell_id, state: c.state}}.to_json+"\n")}
       # fail
       d = g.deltas
       g.step(d)

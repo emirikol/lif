@@ -1,9 +1,11 @@
 .viewport
   .toolbar
-    =link_to 'next round', '/games/round', remote: true
-    =link_to '+col', '/games/add_col'
-    =link_to '+row', '/games/add_row'
-    %span#output
+    -if params[:admin]
+      =link_to 'next round', '/games/round', remote: true
+      
+      -# =link_to '+col', '/games/add_col'
+      -# =link_to '+row', '/games/add_row'
+    %span#output 0ft
   .grid
     -@cells.each do |y, row|
       .row
