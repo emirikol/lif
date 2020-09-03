@@ -16,6 +16,7 @@ export default consumer.subscriptions.create("DeltaChannel", {
       if(d.token_id) $(`.token[data-token-id=${d.token_id}]`).appendTo($(`#${d.id}`)).css({left: 'auto', top: 'auto'});
       if(d == 'clear') $('.cell').removeClass('live lit dead');
     })
+    $('#score').text(`${$('.live').length} live crystals`)
     // Called when there's incoming data on the websocket for this channel
   }
 });

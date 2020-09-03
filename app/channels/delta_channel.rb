@@ -5,7 +5,7 @@ class DeltaChannel < ApplicationCable::Channel
   end
 
   def board data
-    File.open('log/state.log', 'a')  {|f| f.write({board_id: data['id']}.to_json+"\n")}
+    File.open('log/state.log', 'a')  {|f| f.write([{board_id: data['id']}].to_json+"\n")}
     File.open('log/actions.log', 'a'){|f| f.write("ws,board,#{data.to_json}\n")}
     Board.activate data['id']
     ActionCable.server.broadcast "delta", {actions: [:clear] + Crystal.active.map{|c| {id: c.cell_id, crystal: c.state}}}

@@ -1,0 +1,12 @@
+.viewport
+  .toolbar
+    %button{data: {action: 'move', delta: -1}}
+      ='<'
+    %input(name="round" value=0)
+    %button{data: {action: 'move', delta: 1}}
+      ='>'
+  .grid{data: {id: params[:id]}}
+    -@cells.each do |y, row|
+      .row
+        -row.each_with_index do |c, x|
+          .cell{data: {x: x, y: y}, id: c.id}

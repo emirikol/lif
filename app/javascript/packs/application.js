@@ -38,7 +38,25 @@ $( function() {
     }
   });
 
-} );
+  $('[data-action=move]').click((e)=>{
+    let round = $('[name=round]');
+    round.val( parseInt(round.val()) + $(e.target).data('delta') ).trigger('change')
+  })
+  if($('[name=round]').length > 0 ){
+    let rounds = new Promise((resolve)=>{
+      $.get(`/replays/${$('.grid').data('id')}.json`).then(d => resolve(d))
+    });
+    $('[name=round]').change((e)=>{
+      let round = parseInt($(e.target).val());
+      rounds.then((h) => {
+        if(!h[round]) return;
+        $('.cell').removeClass('live lit dead');
+        h[round].forEach(d => $(`#${d.cell_id}`).addClass(d.state))
+      });
+    }).trigger('change')    
+  }
+
+});
 
 // console.info(Delta);
 window.Delta = Delta;
