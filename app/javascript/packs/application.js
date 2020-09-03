@@ -46,6 +46,7 @@ $( function() {
     let rounds = new Promise((resolve)=>{
       $.get(`/replays/${$('.grid').data('id')}.json`).then(d => resolve(d))
     });
+    rounds.then(()=>$('.loading').hide());
     $('[name=round]').change((e)=>{
       let round = parseInt($(e.target).val());
       rounds.then((h) => {
@@ -53,10 +54,26 @@ $( function() {
         $('.cell').removeClass('live lit dead');
         h[round].forEach(d => $(`#${d.cell_id}`).addClass(d.state))
       });
-    }).trigger('change')    
+    }).trigger('change')
+    $(document).on('xhrProgress', (e)=>$('.progress').text(e.loaded))    
   }
 
 });
+
+(()=>{
+  let originalXhr = $.ajaxSettings.xhr;
+  $.ajaxSetup({
+    xhr: ()=>{
+      let req = originalXhr();
+      if(req && req.addEventListener){
+        req.addEventListener("progress",(e)=>{ $(document).trigger('xhrProgress', e) },false);
+      }
+      return req
+    }
+  }); 
+})();
+
+
 
 // console.info(Delta);
 window.Delta = Delta;
