@@ -55,7 +55,7 @@ $( function() {
         h[round].forEach(d => $(`#${d.cell_id}`).addClass(d.state))
       });
     }).trigger('change')
-    $(document).on('xhrProgress', (e)=>$('.progress').text(e.loaded))    
+    $(document).on('xhrProgress', (e,d)=>$('.progress').text(d.loaded))    
   }
 
 });
