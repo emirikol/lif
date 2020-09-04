@@ -9,6 +9,7 @@
     %input(name="round" value=0)
     %button{data: {action: 'move', delta: 1}}
       ='>'
+    %span#score
   .grid{data: {id: params[:id]}}
     -@cells.each do |y, row|
       .row
