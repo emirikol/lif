@@ -53,8 +53,8 @@ $( function() {
         if(!h[round]) return;
         $('.cell').removeClass('live lit dead');
         h[round].forEach(d => $(`#${d.cell_id}`).addClass(d.state))
+        $('#score').text(`${$('.live').length} live crystals`)
       });
-      $('#score').text(`${$('.live').length} live crystals`)
     }).trigger('change')
     $(document).on('xhrProgress', (e,d)=>$('.progress').text(d.loaded))    
   }
